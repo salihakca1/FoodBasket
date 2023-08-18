@@ -9,6 +9,7 @@ function App() {
     <SafeAreaView>
       <View>
         <Text>Hello</Text>
+        <Text>Selamun Aleyküm</Text>
       </View>
     </SafeAreaView>
 
