@@ -8,7 +8,7 @@ function App() {
   return(
     <SafeAreaView>
       <View>
-        <Text>Ladies And Centilmen, Welcome !</Text>
+        <Text>Hello</Text>
       </View>
     </SafeAreaView>
 
