@@ -14,7 +14,7 @@ function HomeScreen({ navigation }) {
 
       <Button
         onPress={() => navigation.navigate('Menu')}
-        title="Go to Menu"
+        title="Go to Menui"
       />
     </View>
   );
