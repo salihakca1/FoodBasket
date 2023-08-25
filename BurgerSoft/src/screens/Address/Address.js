@@ -4,7 +4,7 @@ import React from 'react'
 export default function Address() {
   return (
     <View>
-      <Text>Adres</Text>
+      <Text>AdresScreen Welcome</Text>
     </View>
   )
 }
