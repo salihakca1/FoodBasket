@@ -2,10 +2,13 @@ import * as React from 'react';
 import { Button, View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import {createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+
 import OrderScreen from './screens/Order/Order'
 import AddressScreen from './screens/Address/Address';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Content from './components/MyDrawer/MyDrawer'
+
+import RegisterScreen from './screens/Register/Register';
 
 
 function HomeScreen({ navigation }) {
