@@ -3,6 +3,7 @@ import { Button, View, Text, TouchableOpacity, StyleSheet, ImageBackground } fro
 import {createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 
+import AddAdress from './screens/AddAdress/AddAdress';
 import OrderScreen from './screens/Order/Order'
 import AddressScreen from './screens/Address/Address';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -72,7 +73,7 @@ const ProfileDrawer = () => {
       drawerContent={(props) => <Content {...props} />}>
       <Drawer.Screen name="App" component={MenuScreen} />
       <Drawer.Screen name="Order" component={OrderScreen} />
-      <Drawer.Screen name="Address" component={AddressScreen} />
+      <Drawer.Screen name="Address" component={AddAdress} />
       <Drawer.Screen name="Log out " component={HomeScreen} />
     </Drawer.Navigator>
   )
