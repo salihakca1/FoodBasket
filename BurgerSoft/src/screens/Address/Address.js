@@ -5,7 +5,7 @@ import AddressCard from "../../components/AddressCard/AddressCard";
 
 import RegisterButton from '../../components/RegisterButton/RegisterButton';
 
-const Address = () => {
+const Address = ({navigation}) => {
 
     const data = [
         { id: "1", title: "Ürün A" },
@@ -30,6 +30,7 @@ const Address = () => {
 
     function handleLogin(){ //burada da tıkladıgımızda adres ekle sayfasına gidecegiz. 
         console.log("Tıklandı beybi")
+        navigation.navigate('AddAdress');
     }
 
     const renderProduct = ({item}) => (

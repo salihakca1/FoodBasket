@@ -68,7 +68,7 @@ const ProfileDrawer = () => {
       drawerContent={(props) => <Content {...props} />}>
       <Drawer.Screen name="App" component={MenuScreen} />
       <Drawer.Screen name="Order" component={OrderScreen} />
-      <Drawer.Screen name="Address" component={AddAdress} />
+      <Drawer.Screen name="Address" component={AddressScreen} />
       <Drawer.Screen name="Log out " component={HomeScreen} />
     </Drawer.Navigator>
   )
@@ -83,6 +83,7 @@ export default function Router() {
         <Stack.Screen name="Menu" component={ProfileDrawer} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="AddAdress" component={AddAdress}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

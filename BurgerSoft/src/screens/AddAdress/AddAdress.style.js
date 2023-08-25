@@ -3,7 +3,7 @@ export default StyleSheet.create({
     container: {
         backgroundColor: '#E8E7DC',
         padding:10,
-        height:800,
+        height:900,
     },
     name : {
         borderWidth: 2,
