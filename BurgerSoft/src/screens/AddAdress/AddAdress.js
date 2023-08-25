@@ -10,6 +10,7 @@ const AddAdress = () => {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Formik
         initialValues={{
@@ -21,7 +22,7 @@ const AddAdress = () => {
         onSubmit={handleSubmit}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
-        <KeyboardAvoidingView style={{flex:1}} behavior="padding">  
+        
           <View>
             <Text style={styles.header}> Adres Ekle</Text>
             <Text style={styles.textname}>İsim</Text>
@@ -64,10 +65,10 @@ const AddAdress = () => {
               <Text style={styles.buttontext}>Ekle</Text>
             </TouchableOpacity>
           </View>
-          </KeyboardAvoidingView>
         )}
       </Formik>
     </View>
+    </ScrollView>
   );
 };
 

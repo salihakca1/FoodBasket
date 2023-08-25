@@ -10,52 +10,47 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Content from './components/MyDrawer/MyDrawer'
 
 import RegisterScreen from './screens/Register/Register';
+import LoginScreen from './screens/Login/Login'
+
 
 
 function HomeScreen({ navigation }) {
-
-
   const handleLogin = () => {
-    // Logic for handling login button click
+    navigation.navigate('Login');  // Login ekranına gidiş
   };
 
   const handleSignUp = () => {
-    // Logic for handling sign up button click
+    navigation.navigate('Register');  // Register ekranına gidiş
   };
 
   return (
-
     <ImageBackground source={require('./background.jpg')} style={styles.background}>
       <View style={styles.container}>
-
-
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
-      <Text style={styles.title}>HOŞGELDİNİZ</Text>
-      <View style={styles.buttonContainer}>
-          <View style={styles.buttonRow}>
-            <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={handleLogin}>
-              <Text style={styles.buttonText}>Giriş Yap</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, styles.signUpButton]} onPress={handleSignUp}>
-              <Text style={styles.buttonText}>Kaydol</Text>
-            </TouchableOpacity>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={styles.title}>HOŞGELDİNİZ</Text>
+          <View style={styles.buttonContainer}>
+            <View style={styles.buttonRow}>
+              <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Giriş Yap</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.button, styles.signUpButton]} onPress={handleSignUp}>
+                <Text style={styles.buttonText}>Kaydol</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          
         </View>
-
+      </View>
       
-    </View>
-    </View>
-    <Button style = {styles.buttonmenu}
-          onPress={() => navigation.navigate('Menu')}
-          title="Go to Menu"
-          />
+      <Button
+        style={styles.buttonmenu}
+        onPress={() => navigation.navigate('Menu')}
+        title="Go to Menu"
+      />
 
     </ImageBackground>
-
   );
 }
+
 
 function MenuScreen({ navigation }) {
   return (
@@ -86,6 +81,8 @@ export default function Router() {
       <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Menu" component={ProfileDrawer} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
