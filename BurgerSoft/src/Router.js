@@ -89,13 +89,6 @@ export default function Router() {
 }
 
 
-
-
-
-
-
-
-
 const styles = StyleSheet.create({
   background: {
     flex: 1,

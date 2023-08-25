@@ -4,7 +4,12 @@ import { Formik } from 'formik';
 import styles from './AddAdress.style';
 import { ScrollView } from "react-native-gesture-handler";
 
+import Config from 'react-native-config'; //bunun kurumunu web api kısmında anlattım kanka bakarsın oradan
+
 const AddAdress = () => {
+
+  console.log(Config.API_URL)
+
   const handleSubmit = (values) => {
     console.log(values); 
   };
