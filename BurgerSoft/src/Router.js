@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View } from 'react-native';
+import { Button, View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import {createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -12,14 +12,47 @@ import RegisterScreen from './screens/Register/Register';
 
 
 function HomeScreen({ navigation }) {
+
+
+  const handleLogin = () => {
+    // Logic for handling login button click
+  };
+
+  const handleSignUp = () => {
+    // Logic for handling sign up button click
+  };
+
   return (
+
+    <ImageBackground source={require('./background.jpg')} style={styles.background}>
+      <View style={styles.container}>
+
+
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
-      <Button
-        onPress={() => navigation.navigate('Menu')}
-        title="Go to Menui"
-      />
+      <Text style={styles.title}>HOŞGELDİNİZ</Text>
+      <View style={styles.buttonContainer}>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={handleLogin}>
+              <Text style={styles.buttonText}>Giriş Yap</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.button, styles.signUpButton]} onPress={handleSignUp}>
+              <Text style={styles.buttonText}>Kaydol</Text>
+            </TouchableOpacity>
+          </View>
+          
+        </View>
+
+      
     </View>
+    </View>
+    <Button style = {styles.buttonmenu}
+          onPress={() => navigation.navigate('Menu')}
+          title="Go to Menu"
+          />
+
+    </ImageBackground>
+
   );
 }
 
@@ -57,3 +90,71 @@ export default function Router() {
   );
 }
 
+
+
+
+
+
+
+
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 30,
+    marginTop: 200,
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  button: {
+    flex: 1,
+    paddingVertical: 15,
+    borderRadius: 8,
+    width: 100,
+  },
+  loginButton: {
+    backgroundColor: 'blue',
+    marginRight: 10,
+    width: 100,
+  },
+  signUpButton: {
+    backgroundColor: 'orange',
+    marginLeft: 10,
+    width: 200,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  buttonmenu: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 200,
+  },
+});
