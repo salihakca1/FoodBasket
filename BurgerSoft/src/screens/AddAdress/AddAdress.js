@@ -4,12 +4,15 @@ import { Formik } from 'formik';
 import styles from './AddAdress.style';
 import { ScrollView } from "react-native-gesture-handler";
 
-import Config from 'react-native-config'; //bunun kurumunu web api kısmında anlattım kanka bakarsın oradan
+import Config from 'react-native-config'; 
+import useFetch from '../../hooks/useFetch/UseFetch';
 
 const AddAdress = () => {
 
-  console.log(Config.API_URL)
+  const {error, loading, data} = useFetch(Config.DENEME_URL);
+  console.log("DENEME", data)
 
+  console.log(Config.PRODUCT_URL)
   const handleSubmit = (values) => {
     console.log(values); 
   };

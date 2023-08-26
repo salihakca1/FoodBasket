@@ -9,6 +9,10 @@ import * as yup from 'yup';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import RedButton from "../../components/RedButton/RedButton"; 
 
+import Config from 'react-native-config'; //bunun kurumunu web api kısmında anlattım kanka bakarsın oradan
+import usePost from '../../hooks/usePost/UsePost';
+
+
 import styles from './Register.style';
 
 const validationSchema = yup.object().shape({
@@ -26,6 +30,9 @@ const validationSchema = yup.object().shape({
 });
 
 const App = () => {
+
+
+
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
@@ -33,16 +40,22 @@ const App = () => {
     setShowPicker(!showPicker);
   };
 
+  const {data, loading, error, post} =  usePost();
+
   const handleLogin = (values) => {
 
-    const { acceptTerms, againPassword, ...filteredValues } = values; // acceptTerms ve againPassword değerlerini çıkar
+  const { acceptTerms, againPassword, ...filteredValues } = values; 
   if (values.password === values.againPassword) {
-    console.log("Form Values:", filteredValues);
+
+    post(Config.REGISTER_URL, filteredValues);
+    console.log("tıklandı", filteredValues)
+
   } else {
     console.log("Form Values:", values); 
   }
-  }
 
+  }
+  
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={'height'}>
       <View style={styles.container}>
