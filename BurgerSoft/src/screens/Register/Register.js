@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
-import Input from "../../components/RegisterInput/RegisterInput";
+import { View, Text, KeyboardAvoidingView    } from 'react-native';
+
+import CheckBox from '@react-native-community/checkbox';
+
+import Input from '../../components/Input/Input'; 
 import { Formik } from 'formik';
 import * as yup from 'yup';
-
 import DateTimePicker from "@react-native-community/datetimepicker";
-import Button from "../../components/RedButton/RedButton";
+import RedButton from "../../components/RedButton/RedButton"; 
 
-import RegisterButton from '../../components/RegisterButton/RegisterButton';
+import styles from './Register.style';
 
 const validationSchema = yup.object().shape({
   firstName: yup.string().required('İsim alanı zorunludur'),
@@ -19,10 +21,11 @@ const validationSchema = yup.object().shape({
     .string()
     .required('Şifre tekrarı alanı zorunludur')
     .oneOf([yup.ref('password'), null], 'Şifreler eşleşmiyor'),
+    acceptTerms: yup.boolean().oneOf([true], 'Lütfen şartları kabul edin'),
+
 });
 
 const App = () => {
-
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
@@ -30,142 +33,122 @@ const App = () => {
     setShowPicker(!showPicker);
   };
 
-  function handleLogin(values) {
-    // Post işlemleri burada gerçekleştirilebilir
-  
+  const handleLogin = (values) => {
 
-    if (values.password === values.againPassword) {
-      const { againPassword, ...filteredValues } = values;
-      console.log("Form Values:", filteredValues);
-    } else {
-      // İki alan aynı değilse, tüm değerleri gönder
-      console.log("Form Values:", values); 
-    }
-  
+    const { acceptTerms, againPassword, ...filteredValues } = values; // acceptTerms ve againPassword değerlerini çıkar
+  if (values.password === values.againPassword) {
+    console.log("Form Values:", filteredValues);
+  } else {
+    console.log("Form Values:", values); 
+  }
   }
 
-  return(
-
-    <KeyboardAvoidingView
-    style={{ flex: 1 }}
-    behavior={'height'}
-  >
+  return (
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={'height'}>
       <View style={styles.container}>
-      <Formik
-        initialValues={{
-          firstName: '',
-          lastName: '',
-          email: '',
-          birthDate: '',
-          password: '',
-          againPassword: '',
-        }}
-        onSubmit={handleLogin}
-        validationSchema={validationSchema} >
-        {({ handleSubmit, handleChange, setFieldValue, values, errors, touched }) => (
-          <View>
-            <Input
-              placeholder='Lütfen boş bırakmayınız.'
-              labelText="İsim"
-              value={values.firstName}
-              onType={handleChange('firstName')}
-              errorMessage={(touched.firstName && errors.firstName) || ''}
-               
+      <Text style={styles.headerTitle}>Kayıt Ol</Text>
+
+        <Formik
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            email: '',
+            birthDate: '',
+            password: '',
+            againPassword: '',
+            acceptTerms: false, // New field
+          }}
+          onSubmit={handleLogin}
+          validationSchema={validationSchema}>
+          {({ handleSubmit, handleChange, setFieldValue, values, errors, touched }) => (
+            <View style={styles.formContainer}>
+                <Text style={styles.title}>İsim</Text>
+              <Input
+
+                placeholder='İsim...'
+                value={values.firstName}
+                onType={handleChange('firstName')}
+                errorMessage={touched.firstName && errors.firstName}
               />
-            {values.firstNameError && <Text style={{ color: 'red' }}>{values.firstNameError}</Text>}
 
-            <Input
-              placeholder='Lütfen boş bırakmayınız.'
-              labelText="Soyisim"
-              value={values.lastName}
-              onType={handleChange('lastName')}
-              errorMessage={(touched.lastName && errors.lastName) || ''}
-                
+            <Text style={styles.title}>Soyisim</Text>
+              <Input
+                placeholder='Soyisim...'
+                value={values.lastName}
+                onType={handleChange('lastName')}
+                errorMessage={touched.lastName && errors.lastName}
               />
-            {values.lastNameError && <Text style={{ color: 'red' }}>{values.lastNameError}</Text>}
 
-            <Input
-              placeholder='Lütfen boş bırakmayınız.'
-              labelText="E-Posta"
-              value={values.email}
-              iconName="email"
-              onType={handleChange('email')}
-              errorMessage={(touched.email && errors.email) || ''}
-             
-            />
-            {values.emailError && <Text style={{ color: 'red' }}>{values.emailError}</Text>}
-
-            <Input
-              labelText= "Doğum Tarihi"
-              placeholder='Lütfen boş bırakmayınız.'
-              value={values.birthDate}
-              iconName="clipboard-text-clock-outline"
-              onFocus={toggleDatePicker}
-              errorMessage={(touched.birthDate && errors.birthDate) || ''}
-            
-            />
-            {values.birthDateError && <Text style={{ color: 'red' }}>{values.birthDateError}</Text>}
-
-            {showPicker && (
-              <DateTimePicker
-                mode="date"
-                display="spinner"
-                value={date}
-                onChange={(event, selectedDate) => {
-                  setShowPicker(false);
-                  if (selectedDate) {
-                    setDate(selectedDate);
-                    const selectedDateString = selectedDate.toISOString().split('T')[0];
-                    setFieldValue('birthDate', selectedDateString);
-                  }
-                }}
+              <Text style={styles.title}>E-mail</Text>
+              <Input
+                placeholder='E-mail...'
+                value={values.email}
+                iconName="email"
+                onType={handleChange('email')}
+                errorMessage={touched.email && errors.email}
               />
-            )}
 
+              <Text style={styles.title}>Doğum Tarihi</Text>
+              <Input
+                placeholder='Doğum Tarihi...'
+                value={values.birthDate}
+                iconName="clipboard-text-clock-outline"
+                onFocus={toggleDatePicker}
+                errorMessage={touched.birthDate && errors.birthDate}
+              />
+              {showPicker && (
+                <DateTimePicker
+                  mode="date"
+                  display="spinner"
+                  value={date}
+                  onChange={(event, selectedDate) => {
+                    setShowPicker(false);
+                    if (selectedDate) {
+                      setDate(selectedDate);
+                      const selectedDateString = selectedDate.toISOString().split('T')[0];
+                      setFieldValue('birthDate', selectedDateString);
+                    }
+                  }}
+                />
+              )}
 
-            <Input
-              placeholder='Lütfen boş bırakmayınız.'
-              labelText="Şifre"
-              value={values.password}
-              onType={handleChange('password')}
-              iconName="lock-outline"
-              hidePassword
-              errorMessage={(touched.password && errors.password) || ''}
-            
-            />
-            {values.passwordError && <Text style={{ color: 'red' }}>{values.passwordError}</Text>}
+              <Text style={styles.title}>Şifre</Text>
+              <Input
+                placeholder='Şifre...'
+                value={values.password}
+                onType={handleChange('password')}
+                iconName="lock-outline"
+                hidePassword
+                errorMessage={touched.password && errors.password}
+              />
 
-            <Input
-              placeholder='Lütfen boş bırakmayınız.'
-              labelText="Şifre Tekrar"
-              value={values.againPassword}
-              iconName="lock-outline"
-              onType={handleChange('againPassword')}
-              hidePassword
-              errorMessage={(touched.againPassword && errors.againPassword) || ''}
-              
-            />
-            {values.againPasswordError && <Text style={{ color: 'red' }}>{values.againPasswordError}</Text>}
-            
-            <RegisterButton text = "Üye Ol" onPress= {handleSubmit} ></RegisterButton>
+              <Text style={styles.title}>Tekrar Şifre</Text>
+              <Input
+                placeholder='Tekrar Şifre...'
+                value={values.againPassword}
+                iconName="lock-outline"
+                onType={handleChange('againPassword')}
+                hidePassword
+                errorMessage={touched.againPassword && errors.againPassword}
+              />
+     <View style={styles.checkboxContainer}>
+    <CheckBox
+      value={values.acceptTerms}
+      onValueChange={() => setFieldValue('acceptTerms', !values.acceptTerms)}
+    />
+    <Text style={styles.checkboxLabel}>
+      Kişisel verilerinize dair Aydınlatma Metni için tıklayınız. Üye olmakla, Kullanım Koşulları hükümlerini kabul etmektesiniz.
+    </Text>
+  </View>
 
-          </View>
-            )}
-            </Formik>
-            </View>
+                <RedButton title="Üye Ol" onPress={handleSubmit}  />
+                  </View>
+
+          )}
+        </Formik>
+      </View>
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 5,
-  },
-  formContainer: {
-    alignItems: 'center',
-  },
-});
 
 export default App;
