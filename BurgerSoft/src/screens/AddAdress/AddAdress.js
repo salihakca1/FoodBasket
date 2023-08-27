@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import styles from './AddAdress.style';
 import Config from 'react-native-config';
 
+
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('İsim alanı zorunludur'),
   surname: Yup.string().required('Soyisim alanı zorunludur'),
@@ -17,6 +18,8 @@ const validationSchema = Yup.object().shape({
 const AddAdress = ({ navigation }) => {
   console.log(Config.API_URL);
 
+
+  console.log(Config.PRODUCT_URL)
   const handleSubmit = (values) => {
     console.log(values);
     navigation.goBack();

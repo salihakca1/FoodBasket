@@ -3,7 +3,7 @@ import React from "react";
 import { View, FlatList, StyleSheet } from 'react-native';
 import AddressCard from "../../components/AddressCard/AddressCard";
 
-import RegisterButton from '../../components/RegisterButton/RegisterButton';
+import RedButton from '../../components/RedButton/RedButton';
 
 const Address = ({navigation}) => {
 
@@ -39,7 +39,7 @@ const Address = ({navigation}) => {
         return (
             <View style = {styles.container}>
               <FlatList data={data} renderItem={renderProduct} />
-              <RegisterButton  text="Yeni Adres Ekleyin" onPress={handleLogin} />
+              <RedButton  title="Yeni Adres Ekleyin" onPress={handleLogin} />
             </View>
           );
     
