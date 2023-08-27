@@ -4,7 +4,8 @@ import {createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 
 import AddAdress from './screens/AddAdress/AddAdress';
-import OrderScreen from './screens/Order/Order'
+import OrderScreen from './screens/Order/Order';
+import PastOrders from './screens/PastOrders/PastOrders';
 import AddressScreen from './screens/Address/Address';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Content from './components/MyDrawer/MyDrawer'
@@ -84,6 +85,7 @@ export default function Router() {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="AddAdress" component={AddAdress}/>
+        <Stack.Screen name="PastOrders" component={PastOrders}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

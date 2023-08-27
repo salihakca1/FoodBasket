@@ -28,8 +28,7 @@ const Address = ({navigation}) => {
 
     };
 
-    function handleLogin(){ //burada da tıkladıgımızda adres ekle sayfasına gidecegiz. 
-        console.log("Tıklandı beybi")
+    function handleLogin(){ //burada da tıkladıgımızda adres ekle sayfasına gidecegiz.
         navigation.navigate('AddAdress');
     }
 
