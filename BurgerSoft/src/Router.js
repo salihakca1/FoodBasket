@@ -11,8 +11,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Content from './components/MyDrawer/MyDrawer'
 
 import RegisterScreen from './screens/Register/Register';
-import LoginScreen from './screens/Login/Login'
-
+import LoginScreen from './screens/Login/Login';
+import MenuScreen from "./screens/Menu/Menu";
 
 
 function HomeScreen({ navigation }) {
@@ -22,6 +22,10 @@ function HomeScreen({ navigation }) {
 
   const handleSignUp = () => {
     navigation.navigate('Register');  // Register ekranına gidiş
+  };
+
+  const handleMenu = () => {
+    navigation.navigate('Menu');  // Menu ekranına gidiş
   };
 
   return (
@@ -44,22 +48,22 @@ function HomeScreen({ navigation }) {
       
       <Button
         style={styles.buttonmenu}
-        onPress={() => navigation.navigate('Menu')}
+        onPress={handleMenu}
         title="Go to Menu"
       />
-
+ 
     </ImageBackground>
   );
 }
 
-
+/*
 function MenuScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button onPress={() => navigation.goBack()} title="Go back home" />
     </View>
   );
-}
+}*/
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
