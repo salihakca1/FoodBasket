@@ -14,6 +14,9 @@ import RegisterScreen from './screens/Register/Register';
 import LoginScreen from './screens/Login/Login';
 import MenuScreen from "./screens/Menu/Menu";
 
+import BasketScreen from './screens/Basket/Basket';
+
+
 
 function HomeScreen({ navigation }) {
   const handleLogin = () => {
@@ -90,6 +93,7 @@ export default function Router() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="AddAdress" component={AddAdress}/>
         <Stack.Screen name="PastOrders" component={PastOrders}/>
+        <Stack.Screen name="Basket" component={BasketScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,8 +1,10 @@
-import { View, Text ,Image,FlatList} from 'react-native'
+import { View, Text ,Image,FlatList, TouchableOpacity} from 'react-native'
 import React from 'react'
 import Search from "../../components/Search";
 import styles from "./Menu.style";
 import FoodCard from "../../components/FoodCard"
+
+import { useNavigation } from '@react-navigation/native';
 
 
 const foodData = [
@@ -31,6 +33,12 @@ const foodData = [
 
 export default function Foods() {
 
+  const navigation = useNavigation();
+
+  const goToBasket = () => {
+    navigation.navigate('Basket'); // Navigate to the Basket
+  };
+
   const renderCategoryItem = ({ item }) => (
     <View style={styles.category_title}>
       <Text style={styles.category}>{item.category}</Text>
@@ -45,7 +53,9 @@ export default function Foods() {
     <View style={styles.container}>
       <View style={styles.top_container}>
       <Search/>
-      <Image style={styles.image} source={require('../../assets/sepet.png')}/>
+      <TouchableOpacity onPress={goToBasket}>
+        <Image style={styles.image} source={require('../../assets/sepet.png')} />
+      </TouchableOpacity>
       </View>
       <View style={styles.category}>
         <FlatList
