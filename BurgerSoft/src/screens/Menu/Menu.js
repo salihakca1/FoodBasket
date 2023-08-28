@@ -1,7 +1,7 @@
 import { View, Text ,Image,FlatList} from 'react-native'
 import React from 'react'
 import Search from "../../components/Search";
-import styles from "./Foods.style";
+import styles from "./Menu.style";
 import FoodCard from "../../components/FoodCard"
 
 
