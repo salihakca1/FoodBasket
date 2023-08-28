@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+import ProductList from './ProductList'; 
+
 
 import styles from './Basket.style';
 
 export default function MyBasketPage() {
+
+  
 
   // Buradaki veriler backendden gelecek
   const [products, setProducts] = useState([
@@ -27,6 +32,7 @@ export default function MyBasketPage() {
     // siparişi tamamla
   };
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>🛍️ Sepetim</Text>
@@ -44,8 +50,16 @@ export default function MyBasketPage() {
               <Text style={styles.quantityButton}>+</Text>
             </TouchableOpacity>
           </View>
+
+          
+
         </View>
+        
       ))}
+
+        <View>
+          <ProductList />
+        </View>
 
       <Text style={styles.sectionTitle}>Teslimat Adresi</Text>
 
