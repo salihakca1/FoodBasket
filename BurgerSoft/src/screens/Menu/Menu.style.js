@@ -8,8 +8,8 @@ export default StyleSheet.create({
         flexDirection:"row",
     },
 
-    image:{
-        marginTop:15,
+    icon:{
+        marginTop:20,
         marginLeft:10,
         width:50,
         height:50,
@@ -18,8 +18,12 @@ export default StyleSheet.create({
         margin:10,
     },
     category_title:{
+        textAlign:"center",
+        fontSize:15,
         borderWidth:1 ,
-        borderRadius:10, 
-        borderColor:"#f0fff0"
+        borderRadius:5, 
+        borderColor:"#f0fff0",
+        height:22,
+        width:50
     }
 })

@@ -1,38 +1,40 @@
-import { View, Text ,Image,FlatList, TouchableOpacity} from 'react-native'
-import React from 'react'
+import { View, Text ,FlatList, TouchableOpacity, Button} from 'react-native'
+import React, { useState, useEffect } from 'react'
 import Search from "../../components/Search";
 import styles from "./Menu.style";
 import FoodCard from "../../components/FoodCard"
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
-
-const foodData = [
-  {
-    "id": "0",
-    "category": "Yemekler",
-    "title":"hello",
-    "price":"100"
-  },
-  {
-    "id": "1",
-    "category": "İçecekler",
-    "title":"AI",
-    "price":"100"
-  },
-  {
-    "id": "2",
-    "category": "Tatlılar",
-    "title":"Hey",
-    "price":"100"
-  },
-
-  
-]
-
-
 export default function Foods() {
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
+  useEffect(() => {
+    fetch('http://10.0.2.2:5000/api/categories') //Fetch category
+    .then(response => response.json())
+    .then(data => {
+      if (data.code === 200) {
+        setCategories(data.data.categories);
+      } else {
+        console.error('API returned an error:', data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching categories:', error);
+    });
+    fetch('http://10.0.2.2:5000/api/products') // Fetch products
+      .then(response => response.json())
+      .then(data => {
+        if (data.code === 200 && data.data) {
+          setProducts(data.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+      });
+  }, []);
   const navigation = useNavigation();
 
   const goToBasket = () => {
@@ -40,39 +42,51 @@ export default function Foods() {
   };
 
   const renderCategoryItem = ({ item }) => (
-    <View style={styles.category_title}>
-      <Text style={styles.category}>{item.category}</Text>
-    </View>
+    <TouchableOpacity
+      style={[
+        styles.category,
+        selectedCategory === item.id && styles.selectedCategory, 
+      ]}
+      onPress={() => setSelectedCategory(item.id)}
+    >
+      <Text style={styles.category_title}>{item.name}</Text>
+    </TouchableOpacity>
   );
-
+  
+  const filteredProducts = products.filter(
+    (product) => product.categoryId === selectedCategory
+  );
+  
   const renderFoodCard = ({ item }) => (
     <FoodCard food={item} />
   );
 
+   
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
       <Search/>
       <TouchableOpacity onPress={goToBasket}>
-        <Image style={styles.image} source={require('../../assets/sepet.png')} />
+        <Icon style={styles.icon} name="basket" size={40} color="black" />
       </TouchableOpacity>
       </View>
       <View style={styles.category}>
         <FlatList
-        data ={foodData}
+        data ={categories}
         renderItem={renderCategoryItem}
         horizontal
         showsHorizontalScrollIndicator={false}
         />
-         <FlatList
-        data={foodData}
+           
+        <FlatList
+        data={filteredProducts}
         renderItem={renderFoodCard}
-        keyExtractor={(item) => item.id.toString()} 
-      />
+        keyExtractor={(item) => item.id.toString()}
+        />
+
       </View>
     </View>
   );
-}
+};
 
 
-  

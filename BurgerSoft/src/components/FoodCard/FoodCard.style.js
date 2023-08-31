@@ -13,6 +13,7 @@ export default StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginTop: 5,
+        color:"black"
       },
       price: {
         fontSize: 14,
