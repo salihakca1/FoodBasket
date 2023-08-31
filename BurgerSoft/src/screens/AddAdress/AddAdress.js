@@ -6,21 +6,23 @@ import * as Yup from 'yup';
 import styles from './AddAdress.style';
 import Config from 'react-native-config';
 
+import usePost from '../../hooks/usePost/UsePost';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('İsim alanı zorunludur'),
-  surname: Yup.string().required('Soyisim alanı zorunludur'),
-  number: Yup.string().required('Telefon numarası alanı zorunludur')
+  lastName: Yup.string().required('Soyisim alanı zorunludur'),
+  phoneNumber: Yup.string().required('Telefon numarası alanı zorunludur')
                       .matches(/^[0-9]+$/,'Sadece rakam giriniz'),
-  location: Yup.string().required('Adres alanı zorunludur'),
+  description: Yup.string().required('Adres alanı zorunludur'),
 });
 
 const AddAdress = ({ navigation }) => {
-  console.log(Config.API_URL);
+  const {data, loading, error, post} =  usePost();
 
 
-  console.log(Config.PRODUCT_URL)
   const handleSubmit = (values) => {
+    post(Config.ADD_ADDRESS, values);
+
     console.log(values);
     navigation.goBack();
   };
@@ -31,9 +33,9 @@ const AddAdress = ({ navigation }) => {
         <Formik
           initialValues={{
             name: '',
-            surname: '',
-            number: '',
-            location: '',
+            lastName: '',
+            phoneNumber: '',
+            description: '',
           }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema} 
@@ -53,32 +55,32 @@ const AddAdress = ({ navigation }) => {
               <Text style={styles.textsurname}>Soy isim</Text>
               <TextInput
                 style={styles.surname}
-                onChangeText={handleChange('surname')}
-                onBlur={handleBlur('surname')}
-                value={values.surname}
+                onChangeText={handleChange('lastName')}
+                onBlur={handleBlur('lastName')}
+                value={values.lastName}
                 placeholder="Soy isminizi giriniz .."
               />
-              {touched.surname && errors.surname && <Text style={styles.errorText}>{errors.surname}</Text>}
+              {touched.lastName && errors.lastName && <Text style={styles.errorText}>{errors.lastName}</Text>}
               <Text style={styles.textnumber}>Telefon</Text>
               <TextInput
                 style={styles.number}
-                onChangeText={handleChange('number')}
-                onBlur={handleBlur('number')}
-                value={values.number}
+                onChangeText={handleChange('phoneNumber')}
+                onBlur={handleBlur('phoneNumber')}
+                value={values.phoneNumber}
                 keyboardType="numeric"
                 placeholder="Telefon numaranızı giriniz .."
               />
-              {touched.number && errors.number && <Text style={styles.errorText}>{errors.number}</Text>}
+              {touched.phoneNumber && errors.phoneNumber && <Text style={styles.errorText}>{errors.phoneNumber}</Text>}
               <Text style={styles.textlocation}>Adres</Text>
               <TextInput
                 multiline={true}
                 style={styles.location}
-                onChangeText={handleChange('location')}
-                onBlur={handleBlur('location')}
-                value={values.location}
+                onChangeText={handleChange('description')}
+                onBlur={handleBlur('description')}
+                value={values.description}
                 placeholder="Adresinizi giriniz .."
               />
-              {touched.location && errors.location && <Text style={styles.errorText}>{errors.location}</Text>}
+              {touched.description && errors.description && <Text style={styles.errorText}>{errors.description}</Text>}
               <TouchableOpacity
                 onPress={handleSubmit}
                 style={styles.button}

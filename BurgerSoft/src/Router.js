@@ -16,6 +16,7 @@ import MenuScreen from "./screens/Menu/Menu";
 
 import BasketScreen from './screens/Basket/Basket';
 
+import { useDispatch, useSelector } from 'react-redux'; // useSelector'ı içe aktarıyoruz
 
 
 function HomeScreen({ navigation }) {
@@ -84,15 +85,17 @@ const ProfileDrawer = () => {
 
 
 export default function Router() {
+  const token  = useSelector(state => state.token);
+
   return (
-    <NavigationContainer >
-      <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={token  ? 'Menu' : 'Home'} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Menu" component={ProfileDrawer} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="AddAdress" component={AddAdress}/>
-        <Stack.Screen name="PastOrders" component={PastOrders}/>
+        <Stack.Screen name="AddAdress" component={AddAdress} />
+        <Stack.Screen name="PastOrders" component={PastOrders} />
         <Stack.Screen name="Basket" component={BasketScreen} />
       </Stack.Navigator>
     </NavigationContainer>

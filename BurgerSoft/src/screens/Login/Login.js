@@ -4,6 +4,12 @@ import styles from "./Login.style";
 import RedButton from "../../components/RedButton";
 import Input from "../../components/Input";
 import { Formik } from "formik";
+import Config from 'react-native-config'; 
+import usePost from '../../hooks/usePost/UsePost';
+import { useDispatch } from 'react-redux';
+
+import { setToken, setUser } from '../../redux/userSlicer'; // Update the imports
+import AsyncStorage from '@react-native-async-storage/async-storage'; // AsyncStorage import
 
 import * as yup from 'yup';
 
@@ -13,9 +19,29 @@ const validationSchema = yup.object().shape({
 });
 
 const Login = () => {
-  function handleLogin(values) {
-    console.log(values);
-  }
+  const dispatch = useDispatch();
+  const { data, loading, error, post } = usePost();
+
+  const handleLogin = async (values) => {
+    post(Config.LOGIN_URL, values);
+  
+    if (data && data.data) {
+      const token = data.data.token;
+      const user = data.data.user;
+  
+      dispatch(setToken(token));
+      dispatch(setUser(user)); // Dispatch actions before saving to AsyncStorage
+  
+      await AsyncStorage.setItem('userToken', token);
+      await AsyncStorage.setItem('userData', JSON.stringify(user));
+  
+      console.log("Token:", token);
+      console.log("User bilgisi", user);
+    }
+  };
+
+  
+
 
   return (
     <View style={styles.container}>

@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import RedButton from "../../components/RedButton/RedButton"; 
 
-import Config from 'react-native-config'; //bunun kurumunu web api kısmında anlattım kanka bakarsın oradan
+import Config from 'react-native-config'; 
 import usePost from '../../hooks/usePost/UsePost';
 
 
