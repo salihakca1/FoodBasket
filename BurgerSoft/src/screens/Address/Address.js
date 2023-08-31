@@ -10,14 +10,14 @@ import { useSelector } from 'react-redux';
 
 const Address = ({navigation}) => {
   const {error, loading, data} = useFetch(Config.GET_ADDRESS);
- 
+  console.log("Adressler verileri", data)
+
   const user = useSelector(state => state.user.user);
   console.log('user from Redux:', user);
   
   const token = useSelector(state => state.user.token);
   console.log("User token Redux: ",token)
 
-  console.log("Adressler verileri", data)
 
     const datas = [
         { id: "1", title: "Ürün A" },

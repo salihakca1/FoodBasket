@@ -1,25 +1,31 @@
 import { useState } from "react";
 import axios from 'axios';
+import { useSelector } from 'react-redux'; // Redux store'dan state almak için
 
 function usePost() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const post = async (url, apiData) => {
-       
+    const token = useSelector(state => state.user.token); // Redux store'dan token alınması
 
-            //görüşürz kendine iyi bak
+    const post = async (url, apiData) => {
         try {
             setLoading(true);
-            const { data: responseData } = await axios.post(url, apiData);
-        
-            setData(responseData);
-            setLoading(false);
 
-           
+            const config = {
+                headers: {}
+            };
+
+            if (token) {
+                config.headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            const response = await axios.post(url, apiData, config);
+
+            setData(response.data);
+            setLoading(false);
         } catch (err) {
-            
             setError(err);
             setLoading(false);
         }
