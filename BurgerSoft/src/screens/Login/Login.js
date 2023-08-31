@@ -34,7 +34,7 @@ const Login = () => {
   
       await AsyncStorage.setItem('userToken', token);
       await AsyncStorage.setItem('userData', JSON.stringify(user));
-  
+      
       console.log("Token:", token);
       console.log("User bilgisi", user);
     }

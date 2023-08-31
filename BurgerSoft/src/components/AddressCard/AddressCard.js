@@ -6,7 +6,7 @@ const AddressCard = ({product, onSelect, }) => {
     return(
         <TouchableWithoutFeedback onPress={onSelect}>
             <View style = {styles.container} >
-                <Text style= {styles.title} >{product.title}</Text>
+                <Text style= {styles.title} >{product.description}</Text>
             </View>
         </TouchableWithoutFeedback>
     )
