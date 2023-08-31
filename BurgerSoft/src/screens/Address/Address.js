@@ -4,10 +4,22 @@ import { View, FlatList, StyleSheet } from 'react-native';
 import AddressCard from "../../components/AddressCard/AddressCard";
 
 import RedButton from '../../components/RedButton/RedButton';
+import Config from 'react-native-config';
+import useFetch from "../../hooks/useFetch/UseFetch";
+import { useSelector } from 'react-redux';
 
 const Address = ({navigation}) => {
+  const {error, loading, data} = useFetch(Config.GET_ADDRESS);
+ 
+  const user = useSelector(state => state.user.user);
+  console.log('user from Redux:', user);
+  
+  const token = useSelector(state => state.user.token);
+  console.log("User token Redux: ",token)
 
-    const data = [
+  console.log("Adressler verileri", data)
+
+    const datas = [
         { id: "1", title: "Ürün A" },
         { id: "2", title: "Ürün B" },
         { id: "3", title: "Ürün C" },
@@ -38,7 +50,7 @@ const Address = ({navigation}) => {
 
         return (
             <View style = {styles.container}>
-              <FlatList data={data} renderItem={renderProduct} />
+              <FlatList data={datas} renderItem={renderProduct} />
               <RedButton  title="Yeni Adres Ekleyin" onPress={handleLogin} />
             </View>
           );
