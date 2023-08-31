@@ -5,11 +5,17 @@ import styles from "./Menu.style";
 import FoodCard from "../../components/FoodCard"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import useFetch from "../../hooks/useFetch/UseFetch";
+import Config from 'react-native-config';
 
 export default function Foods() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+
+  const {error, loading, data} = useFetch(Config.PRODUCT_URL);
+  console.log("Adressler verileri", data)
 
   useEffect(() => {
     fetch('http://10.0.2.2:5000/api/categories') //Fetch category
