@@ -9,7 +9,7 @@ const FoodCard = ({food}) => {
   return (
         <View key={food.id} style={styles.container}>
           <Text style={styles.title}>{food.name}</Text>
-          <Text style={styles.price}>Price: {food.price} TL</Text>
+          <Text style={styles.price}>Fiyat: {food.price} TL</Text>
           <View style={styles.buton_container}>
           <ThreePartButton />
           </View>     

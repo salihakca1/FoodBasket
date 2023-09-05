@@ -13,8 +13,9 @@ import Content from './components/MyDrawer/MyDrawer'
 import RegisterScreen from './screens/Register/Register';
 import LoginScreen from './screens/Login/Login';
 import MenuScreen from "./screens/Menu/Menu";
-
 import BasketScreen from './screens/Basket/Basket';
+
+import FoodDetail from './screens/FoodDetail/FoodDetail';
 
 import { useDispatch, useSelector } from 'react-redux'; // useSelector'ı içe aktarıyoruz
 
@@ -92,6 +93,7 @@ export default function Router() {
       <Stack.Navigator initialRouteName={token  ? 'Menu' : 'Home'} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Menu" component={ProfileDrawer} />
+        <Stack.Screen name="FoodDetail" component={FoodDetail}/>
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="AddAdress" component={AddAdress} />

@@ -17,7 +17,8 @@ export default function Foods() {
   const { error: categoryError, loading: categoryLoading, data: categoryData } = useFetch(Config.CATEGORIES_URL);
   const { error: productError, loading: productLoading, data: productData } = useFetch(Config.PRODUCT_URL);
 
- 
+  const [searchQuery, setSearchQuery] = useState('');
+
   const navigation = useNavigation();
 
   const goToBasket = () => {
@@ -40,18 +41,28 @@ export default function Foods() {
     (product) => product.categoryId === selectedCategory
   ) || [];
   
-  const renderFoodCard = ({ item }) => (
-    <FoodCard food={item} />
-  );
+  const renderFoodCard = ({ item }) => {
+    if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+      return null; 
+    }
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate('FoodDetail', { food: item })}>
+        <FoodCard food={item} />
+      </TouchableOpacity>
+    );
+  };
 
   const categoryItems = categoryData?.data?.categories || [];
 
- 
+ const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
-      <Search/>
-      <TouchableOpacity onPress={goToBasket}>
+      <Search onSearch={handleSearch}/>   
+     <TouchableOpacity onPress={goToBasket}>
         <Icon style={styles.icon} name="basket" size={40} color="black" />
       </TouchableOpacity>
       </View>
