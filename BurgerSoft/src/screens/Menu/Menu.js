@@ -8,8 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import useFetch from "../../hooks/useFetch/UseFetch";
 import Config from 'react-native-config';
 
-import Loading from "../../assets/loading.json.json";
-import Error from "../../assets/error.json";
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
 
 export default function Foods() {
 
@@ -58,6 +58,14 @@ export default function Foods() {
     setSearchQuery(query);
   };
 
+  if (categoryLoading || productLoading) {
+    return <Loading />;
+      }
+
+  if (categoryError || productError) {
+      return <Error />;
+      }
+      
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>

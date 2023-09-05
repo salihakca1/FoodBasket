@@ -8,8 +8,8 @@ import Config from 'react-native-config';
 import useFetch from "../../hooks/useFetch/UseFetch";
 import { useSelector } from 'react-redux';
 
-import Loading from "../../assets/loading.json.json";
-import Error from "../../assets/error.json";
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
 
 const Address = ({navigation}) => {
   const {error, loading, data} = useFetch(Config.GET_ADDRESS);
@@ -38,6 +38,13 @@ const Address = ({navigation}) => {
         <AddressCard product= {item} onSelect={() => handleProductSelect(item.id)} />
         ) ;
 
+        if(loading){
+          return <Loading />;
+      }
+  
+      if(error){  
+          return <Error />;
+      }
         return (
             <View style = {styles.container}>
               <FlatList data={data?.data} renderItem={renderProduct} />
