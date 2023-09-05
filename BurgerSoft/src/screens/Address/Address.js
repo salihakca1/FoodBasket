@@ -8,6 +8,9 @@ import Config from 'react-native-config';
 import useFetch from "../../hooks/useFetch/UseFetch";
 import { useSelector } from 'react-redux';
 
+import Loading from "../../assets/loading.json.json";
+import Error from "../../assets/error.json";
+
 const Address = ({navigation}) => {
   const {error, loading, data} = useFetch(Config.GET_ADDRESS);
   console.log("Adressler verileri", data)

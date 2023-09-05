@@ -5,19 +5,6 @@ import ThreePartButton from "../../components/ThreePartButton"
 
 
 const FoodCard = ({food}) => {
-  const [product, setProduct] = useState([]);
-
-  useEffect(() => {
-    // Fetch data from the API
-    fetch('http://10.0.2.2:5000/api/products')
-    .then(response => response.json())
-    .then(data => {
-      if (data.code === 200 && data.data) {
-        // Ürünleri state'e kaydet
-        setProduct(data.data);
-      }
-    });
-}, []);
 
   return (
         <View key={food.id} style={styles.container}>

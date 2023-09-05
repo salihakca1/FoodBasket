@@ -8,39 +8,16 @@ import { useNavigation } from '@react-navigation/native';
 import useFetch from "../../hooks/useFetch/UseFetch";
 import Config from 'react-native-config';
 
+import Loading from "../../assets/loading.json.json";
+import Error from "../../assets/error.json";
+
 export default function Foods() {
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
 
+  const [selectedCategory, setSelectedCategory] = useState(1);
+  const { error: categoryError, loading: categoryLoading, data: categoryData } = useFetch(Config.CATEGORIES_URL);
+  const { error: productError, loading: productLoading, data: productData } = useFetch(Config.PRODUCT_URL);
 
-  const {error, loading, data} = useFetch(Config.PRODUCT_URL);
-  console.log("Adressler verileri", data)
-
-  useEffect(() => {
-    fetch('http://10.0.2.2:5000/api/categories') //Fetch category
-    .then(response => response.json())
-    .then(data => {
-      if (data.code === 200) {
-        setCategories(data.data.categories);
-      } else {
-        console.error('API returned an error:', data);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching categories:', error);
-    });
-    fetch('http://10.0.2.2:5000/api/products') // Fetch products
-      .then(response => response.json())
-      .then(data => {
-        if (data.code === 200 && data.data) {
-          setProducts(data.data);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching products:', error);
-      });
-  }, []);
+ 
   const navigation = useNavigation();
 
   const goToBasket = () => {
@@ -59,15 +36,17 @@ export default function Foods() {
     </TouchableOpacity>
   );
   
-  const filteredProducts = products.filter(
+  const filteredProducts = productData?.data?.filter(
     (product) => product.categoryId === selectedCategory
-  );
+  ) || [];
   
   const renderFoodCard = ({ item }) => (
     <FoodCard food={item} />
   );
 
-   
+  const categoryItems = categoryData?.data?.categories || [];
+
+ 
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
@@ -77,12 +56,12 @@ export default function Foods() {
       </TouchableOpacity>
       </View>
       <View style={styles.category}>
-        <FlatList
-        data ={categories}
-        renderItem={renderCategoryItem}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        />
+          <FlatList
+          data={categoryItems}
+          renderItem={renderCategoryItem}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          />
            
         <FlatList
         data={filteredProducts}
@@ -94,5 +73,3 @@ export default function Foods() {
     </View>
   );
 };
-
-
