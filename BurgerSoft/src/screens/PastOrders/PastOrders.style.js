@@ -57,6 +57,9 @@ export default StyleSheet.create({
     },
     panelheader : {
         fontSize:20,
+    },
+    panelheader : {
+        fontSize:20,
     }
 }); 
   
