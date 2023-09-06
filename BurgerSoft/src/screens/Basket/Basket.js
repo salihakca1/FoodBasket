@@ -1,34 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 
 import Config from 'react-native-config';
 
-import useFetch from "../../hooks/useFetch/UseFetch";
-import AddressCard from "../../components/AddressCard/AddressCard";
+import useFetch from '../../hooks/useFetch/UseFetch';
 
-import CartItemCard from "../../components/CartItemCard/CartItemCard";
-
-
+import CartItemCard from '../../components/CartItemCard/CartItemCard';
 
 import styles from './Basket.style';
 
+import {Picker} from '@react-native-picker/picker';
+
 const MyBasketPage = ({navigation}) => {
-  
-  const {error, loading, data} = useFetch(Config.PRODUCT_URL);
-  console.log("Ürün verileri", data)
+  const {
+    error: error,
+    loading: loading,
+    data: data,
+  } = useFetch(Config.PRODUCT_URL);
+  console.log('Ürün verileri', data);
+  const {
+    error: AddressError,
+    loading: AddressLoading,
+    data: dataAddress,
+  } = useFetch(Config.GET_ADDRESS);
+
+  console.log('Address verileri', dataAddress);
+  console.log('Address verileriiiii', dataAddress.data);
 
   // Buradaki veriler backendden gelecek
-  const [products, setProducts] = useState([
-
-  ]);
+  const [products, setProducts] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState('adres seçiniz');
 
   const handleQuantityChange = (productId, newQuantity) => {
     setProducts(prevProducts =>
       prevProducts.map(product =>
         product.id === productId
-          ? { ...product, quantity: Math.max(newQuantity, 1) } 
-          : product
-      )
+          ? {...product, quantity: Math.max(newQuantity, 1)}
+          : product,
+      ),
     );
   };
 
@@ -37,11 +46,12 @@ const MyBasketPage = ({navigation}) => {
     // siparişi tamamla
   };
 
-
   const renderProduct = ({item}) => (
-    <CartItemCard product= {item} onSelect={() => handleProductSelect(item.id)} />
-   );
-
+    <CartItemCard
+      product={item}
+      onSelect={() => handleProductSelect(item.id)}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -51,18 +61,24 @@ const MyBasketPage = ({navigation}) => {
 
       <FlatList data={data?.data} renderItem={renderProduct} />
 
-
-
       <Text style={styles.sectionTitle}>Teslimat Adresi</Text>
+{/* 
+      <Picker
+        selectedValue={selectedAddress}
+        onValueChange={(itemValue, itemIndex) => setSelectedAddress(itemValue)}>
+        {dataAddress.data.map((item, index) => (
+          <Picker.Item key={index} label={item.address} value={item.address} />
+        ))}
+        </Picker>*/}
+        
 
       <TouchableOpacity
         style={styles.completeOrderButton}
-        onPress={handleCompleteOrder}
-      >
+        onPress={handleCompleteOrder}>
         <Text style={styles.buttonText}>Siparişi Tamamla</Text>
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 export default MyBasketPage;
