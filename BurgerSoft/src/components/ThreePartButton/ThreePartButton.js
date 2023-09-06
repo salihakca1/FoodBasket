@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity} from 'react-native';
-import styles from "./ThreePartButton.style"
+import { View, Text, TouchableOpacity } from 'react-native';
+import styles from "./ThreePartButton.style";
 
-const ThreePartButton = () => {
-  const [count, setCount] = useState(0);
-
+const ThreePartButton = ({ count, onCountChange }) => {
   const incrementCount = () => {
-    setCount(count + 1);
+    onCountChange(count + 1); // Miktarı artır
   };
 
   const decrementCount = () => {
     if (count > 0) {
-      setCount(count - 1);
+      onCountChange(count - 1); // Miktarı azalt (0'dan küçük olmamalı)
     }
   };
 
@@ -33,6 +31,5 @@ const ThreePartButton = () => {
     </TouchableOpacity>
   );
 };
-
 
 export default ThreePartButton;

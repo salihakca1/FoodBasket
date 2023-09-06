@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userSlicer';
+import orderReducer from './orderSlicer'; // Yeni eklenen reducer
 import { setUser, setToken } from './userSlicer'; 
 
 const getUserDataFromStorage = async () => {
@@ -18,6 +19,7 @@ const initialState = getUserDataFromStorage();
 const store = configureStore({
   reducer: {
     user: userReducer,
+    order: orderReducer, // Yeni eklenen reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

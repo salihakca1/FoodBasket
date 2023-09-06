@@ -11,7 +11,8 @@ import Config from 'react-native-config';
 import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error/Error";
 
-export default function Foods() {
+
+export default function Foods({navigation}) {
 
   const [selectedCategory, setSelectedCategory] = useState(1);
   const { error: categoryError, loading: categoryLoading, data: categoryData } = useFetch(Config.CATEGORIES_URL);
@@ -19,7 +20,7 @@ export default function Foods() {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const navigation = useNavigation();
+  
 
   const goToBasket = () => {
     navigation.navigate('Basket'); // Navigate to the Basket
@@ -65,7 +66,9 @@ export default function Foods() {
   if (categoryError || productError) {
       return <Error />;
       }
-      
+
+    
+
   return (
     <View style={styles.container}>
       <View style={styles.top_container}>
