@@ -6,6 +6,7 @@ export default StyleSheet.create({
     },
     top_container:{
         flexDirection:"row",
+        
     },
 
     icon:{
@@ -16,14 +17,17 @@ export default StyleSheet.create({
     },
     category:{
         margin:10,
+        
     },
     category_title:{
         textAlign:"center",
-        fontSize:15,
+        fontSize:17,
+        fontWeight: 'bold',
         borderWidth:1 ,
         borderRadius:5, 
-        borderColor:"#f0fff0",
-        height:22,
-        width:50
+        borderColor:"black",
+        height:25,
+        width:70,
+        
     }
 })

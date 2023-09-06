@@ -18,7 +18,7 @@ const validationSchema = yup.object().shape({
   password: yup.string().required('Şifre alanı zorunludur'),
 });
 
-const Login = () => {
+const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const { data, loading, error, post } = usePost();
 
@@ -28,10 +28,14 @@ const Login = () => {
     if (data && data.data) {
       const token = data.data.token;
       const user = data.data.user;
-  
+      
       dispatch(setToken(token));
       dispatch(setUser(user)); // Dispatch actions before saving to AsyncStorage
-  
+
+      if(token){
+        navigation.navigate("Menu")
+      }
+      
       await AsyncStorage.setItem('userToken', token);
       await AsyncStorage.setItem('userData', JSON.stringify(user));
       
