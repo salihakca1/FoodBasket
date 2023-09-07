@@ -29,7 +29,7 @@ const validationSchema = yup.object().shape({
 
 });
 
-const App = () => {
+const App = ({navigation}) => {
 
 
 
@@ -49,7 +49,7 @@ const App = () => {
 
     post(Config.REGISTER_URL, filteredValues);
     console.log("tıklandı", filteredValues)
-
+    navigation.navigate("Login")
   } else {
     console.log("Form Values:", values); 
   }
