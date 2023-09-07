@@ -4,12 +4,12 @@ import styles from "./ThreePartButton.style";
 
 const ThreePartButton = ({ count, onCountChange }) => {
   const incrementCount = () => {
-    onCountChange(count + 1); // Miktarı artır
+    onCountChange(count + 1);
   };
 
   const decrementCount = () => {
     if (count > 0) {
-      onCountChange(count - 1); // Miktarı azalt (0'dan küçük olmamalı)
+      onCountChange(count - 1); 
     }
   };
 

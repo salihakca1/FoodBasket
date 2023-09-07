@@ -1,57 +1,62 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
-
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import Config from 'react-native-config';
-
 import useFetch from '../../hooks/useFetch/UseFetch';
-
 import CartItemCard from '../../components/CartItemCard/CartItemCard';
-
 import styles from './Basket.style';
+import { Picker } from '@react-native-picker/picker';
+import { useSelector } from 'react-redux';
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
+import usePost from '../../hooks/usePost/UsePost';
+import { useDispatch } from 'react-redux';
 
-import {Picker} from '@react-native-picker/picker';
+const MyBasketPage = ({ navigation }) => {
+  const order = useSelector(state => state.order.orders);
+  const { error: addressError, loading: addressLoading, data: addressData } = useFetch(Config.GET_ADDRESS);
+  const dispatch = useDispatch();
 
-const MyBasketPage = ({navigation}) => {
-  const {
-    error: error,
-    loading: loading,
-    data: data,
-  } = useFetch(Config.PRODUCT_URL);
-  console.log('Ürün verileri', data);
-  const {
-    error: AddressError,
-    loading: AddressLoading,
-    data: dataAddress,
-  } = useFetch(Config.GET_ADDRESS);
+  const { data: orderData, loading: orderLoading, error: orderError, post } = usePost();
 
-  console.log('Address verileri', dataAddress);
-  console.log('Address verileriiiii', dataAddress.data);
+  
 
-  // Buradaki veriler backendden gelecek
+  const addresses = addressData?.data || []; 
+
+  console.log(addresses)
+  const handleCompleteOrder = () => {
+    //post(Config.ADD_ORDER, addresses.id);
+  };
+
   const [products, setProducts] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState('adres seçiniz');
+  const [selectedAddress, setSelectedAddress] = useState(addresses.length > 0 ? addresses[0].description : 'adres seçiniz');
 
   const handleQuantityChange = (productId, newQuantity) => {
     setProducts(prevProducts =>
       prevProducts.map(product =>
         product.id === productId
-          ? {...product, quantity: Math.max(newQuantity, 1)}
+          ? { ...product, quantity: Math.max(newQuantity, 1) }
           : product,
       ),
     );
   };
 
-  // burada sepet bilgileri backende iletilecek
-  const handleCompleteOrder = () => {
-    // siparişi tamamla
-  };
-
-  const renderProduct = ({item}) => (
+  const renderProduct = ({ item }) => (
     <CartItemCard
       product={item}
       onSelect={() => handleProductSelect(item.id)}
+      onQuantityChange={handleQuantityChange}
     />
   );
+
+    
+
+  if (orderLoading || addressLoading) {
+    return <Loading />;
+      }
+
+  if (orderError || addressError) {
+      return <Error />;
+      }
 
   return (
     <View style={styles.container}>
@@ -59,22 +64,27 @@ const MyBasketPage = ({navigation}) => {
 
       <Text style={styles.sectionTitle}>Seçili Ürünlerim</Text>
 
-      <FlatList data={data?.data} renderItem={renderProduct} />
+      <FlatList data={order} renderItem={renderProduct} />
 
       <Text style={styles.sectionTitle}>Teslimat Adresi</Text>
-{/* 
+
       <Picker
         selectedValue={selectedAddress}
-        onValueChange={(itemValue, itemIndex) => setSelectedAddress(itemValue)}>
-        {dataAddress.data.map((item, index) => (
-          <Picker.Item key={index} label={item.address} value={item.address} />
+        onValueChange={(itemValue, itemIndex) => setSelectedAddress(itemValue)}
+      >
+        {addresses.map((item, index) => (
+          <Picker.Item
+            key={index}
+            label={item.description}
+            value={item.description}
+          />
         ))}
-        </Picker>*/}
-        
+      </Picker>
 
       <TouchableOpacity
         style={styles.completeOrderButton}
-        onPress={handleCompleteOrder}>
+        onPress={handleCompleteOrder}
+      >
         <Text style={styles.buttonText}>Siparişi Tamamla</Text>
       </TouchableOpacity>
     </View>

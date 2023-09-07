@@ -1,22 +1,22 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userSlicer';
-import orderReducer from './orderSlicer'; // Yeni eklenen reducer
+import orderReducer from './orderSlicer'; 
 import { setUser, setToken } from './userSlicer'; 
 
 const getUserDataFromStorage = async () => {
   const storedToken = await AsyncStorage.getItem('userToken');
   const storedUserData = await AsyncStorage.getItem('userData');
-  const storedCartData = await AsyncStorage.getItem('cartData'); // Sepet verilerini al
+  const storedCartData = await AsyncStorage.getItem('cartData'); 
 
   console.log('Stored Token:', storedToken);
   console.log('Stored User Data:', storedUserData);
-  console.log('Stored Cart Data:', storedCartData); // Sepet verilerini göster
+  console.log('Stored Cart Data:', storedCartData); 
 
   const userData = storedUserData ? JSON.parse(storedUserData) : null;
   const cartData = storedCartData ? JSON.parse(storedCartData) : [];
 
-  return { token: storedToken, user: userData, cart: cartData }; // Sepet verilerini de dön
+  return { token: storedToken, user: userData, cart: cartData };
 };
 
 const initialState = getUserDataFromStorage();
@@ -24,7 +24,7 @@ const initialState = getUserDataFromStorage();
 const store = configureStore({
   reducer: {
     user: userReducer,
-    order: orderReducer, // Yeni eklenen reducer
+    order: orderReducer, 
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

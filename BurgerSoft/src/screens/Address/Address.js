@@ -14,10 +14,7 @@ import Error from "../../components/Error/Error";
 const Address = ({navigation}) => {
   const {error, loading, data} = useFetch(Config.GET_ADDRESS);
 
-  
-
-  console.log("Adressler verileri", data)
-  const order = useSelector(state => state.order.orders);
+    const order = useSelector(state => state.order.orders);
   console.log("order", order)
   /*
   const user = useSelector(state => state.user.user);
@@ -34,7 +31,7 @@ const Address = ({navigation}) => {
 
     };
 
-    function handleLogin(){ //burada da tıkladıgımızda adres ekle sayfasına gidecegiz.
+    function handleLogin(){
         navigation.navigate('AddAdress');
     }
 

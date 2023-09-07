@@ -1,9 +1,8 @@
-// redux/orderSlicer.js
 import { createSlice } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 const initialState = {
-  orders: [], // Sepet içeriği burada tutulacak
+  orders: [], 
 };
 
 const orderSlice = createSlice({
@@ -11,36 +10,28 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      // Sepete ürün eklemek için bu reducer kullanılır
-      const { id, name, price, quantity } = action.payload;
-      const existingItemIndex = state.orders.findIndex((item) => item.id === id);
+      const { productId, name, price, quantity } = action.payload; 
+      const existingItemIndex = state.orders.findIndex((item) => item.productId === productId); 
 
       if (existingItemIndex !== -1) {
-        // Ürün sepette zaten varsa, miktarı artır
         state.orders[existingItemIndex].quantity += quantity;
       } else {
-        // Ürün sepette yoksa, yeni bir öğe olarak ekle
-        state.orders.push({ id, name, price, quantity });
+        state.orders.push({ productId, name, price, quantity });
       }
 
-      // Sepet güncellendiğinde AsyncStorage kullanarak verileri sakla
       AsyncStorage.setItem('cartData', JSON.stringify(state.orders));
     },
     removeFromCart: (state, action) => {
-      // Sepetten ürün çıkarmak için bu reducer kullanılır
-      const { id, quantity } = action.payload;
-      const existingItemIndex = state.orders.findIndex((item) => item.id === id);
+      const { productId, quantity } = action.payload; 
+      const existingItemIndex = state.orders.findIndex((item) => item.productId === productId); 
 
       if (existingItemIndex !== -1) {
-        // Ürün sepette varsa, miktarı azalt
         state.orders[existingItemIndex].quantity -= quantity;
         if (state.orders[existingItemIndex].quantity <= 0) {
-          // Eğer ürünün miktarı sıfırsa, sepetteki öğeyi kaldır
           state.orders.splice(existingItemIndex, 1);
         }
       }
 
-      // Sepet güncellendiğinde AsyncStorage kullanarak verileri sakla
       AsyncStorage.setItem('cartData', JSON.stringify(state.orders));
     },
   },
