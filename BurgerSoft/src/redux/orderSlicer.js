@@ -34,8 +34,12 @@ const orderSlice = createSlice({
 
       AsyncStorage.setItem('cartData', JSON.stringify(state.orders));
     },
+    resetOrder: (state) => {
+      state.orders = [];
+      AsyncStorage.removeItem('cartData'); 
+    },
   },
 });
 
-export const { addToCart, removeFromCart } = orderSlice.actions;
+export const { addToCart, removeFromCart, resetOrder } = orderSlice.actions;
 export default orderSlice.reducer;

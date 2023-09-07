@@ -183,6 +183,7 @@ exports.reOrder = async (req, res, next) => {
 
 exports.getPastOrders = async (req, res, next) => {
   try {
+    console.log("sss")
     const orders = await Order.findAll({
       where: { userId: req.user.id },
       include: [{ model: Address }],

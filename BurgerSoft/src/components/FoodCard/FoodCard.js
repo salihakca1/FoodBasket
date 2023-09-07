@@ -16,7 +16,7 @@ const FoodCard = ({ food }) => {
   const handleAddToCart = () => {
     if (quantity > 0) {
       dispatch(addToCart({ productId: food.id, name: food.name, price: food.price, quantity })); 
-     // post(Config.ADD_CART_ORDER, 1);
+       post(Config.ADD_CART_ORDER, {product: {id: food.id}});
      // console.log("Food id", food.id)
     }
   };
