@@ -8,8 +8,8 @@ import Config from 'react-native-config';
 import usePost from '../../hooks/usePost/UsePost';
 import { useDispatch } from 'react-redux';
 
-import { setToken, setUser } from '../../redux/userSlicer'; // Update the imports
-import AsyncStorage from '@react-native-async-storage/async-storage'; // AsyncStorage import
+import { setToken, setUser } from '../../redux/userSlicer'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as yup from 'yup';
 
@@ -30,7 +30,7 @@ const Login = ({navigation}) => {
       const user = data.data.user;
       
       dispatch(setToken(token));
-      dispatch(setUser(user)); // Dispatch actions before saving to AsyncStorage
+      dispatch(setUser(user)); 
 
       if(token){
         navigation.navigate("Menu")
