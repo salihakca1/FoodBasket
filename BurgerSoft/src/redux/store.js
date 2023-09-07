@@ -7,11 +7,16 @@ import { setUser, setToken } from './userSlicer';
 const getUserDataFromStorage = async () => {
   const storedToken = await AsyncStorage.getItem('userToken');
   const storedUserData = await AsyncStorage.getItem('userData');
+  const storedCartData = await AsyncStorage.getItem('cartData'); // Sepet verilerini al
+
   console.log('Stored Token:', storedToken);
   console.log('Stored User Data:', storedUserData);
-  const userData = storedUserData ? JSON.parse(storedUserData) : null;
+  console.log('Stored Cart Data:', storedCartData); // Sepet verilerini göster
 
-  return { token: storedToken, user: userData };
+  const userData = storedUserData ? JSON.parse(storedUserData) : null;
+  const cartData = storedCartData ? JSON.parse(storedCartData) : [];
+
+  return { token: storedToken, user: userData, cart: cartData }; // Sepet verilerini de dön
 };
 
 const initialState = getUserDataFromStorage();

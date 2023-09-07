@@ -1,4 +1,6 @@
+// redux/orderSlicer.js
 import { createSlice } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 const initialState = {
   orders: [], // Sepet içeriği burada tutulacak
@@ -20,6 +22,9 @@ const orderSlice = createSlice({
         // Ürün sepette yoksa, yeni bir öğe olarak ekle
         state.orders.push({ id, name, price, quantity });
       }
+
+      // Sepet güncellendiğinde AsyncStorage kullanarak verileri sakla
+      AsyncStorage.setItem('cartData', JSON.stringify(state.orders));
     },
     removeFromCart: (state, action) => {
       // Sepetten ürün çıkarmak için bu reducer kullanılır
@@ -34,6 +39,9 @@ const orderSlice = createSlice({
           state.orders.splice(existingItemIndex, 1);
         }
       }
+
+      // Sepet güncellendiğinde AsyncStorage kullanarak verileri sakla
+      AsyncStorage.setItem('cartData', JSON.stringify(state.orders));
     },
   },
 });
