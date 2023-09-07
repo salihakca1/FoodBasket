@@ -1,0 +1,257 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require("../app");
+var debug = require("debug")("api:server");
+var http = require("http");
+const { PORT } = require("../config");
+const bcrypt = require("bcrypt");
+
+/*
+  Database Connection
+*/
+const sequelize = require("../db/Database");
+const Address = require("../db/models/Addresses.js");
+const CartItem = require("../db/models/CartItem.js");
+const Cart = require("../db/models/Cart.js");
+const Category = require("../db/models/Category.js");
+const Order = require("../db/models/Order.js");
+const OrderItem = require("../db/models/OrderItem.js");
+const Product = require("../db/models/Product.js");
+const User = require("../db/models/Users.js");
+const Menu = require("../db/models/Menu");
+
+Address.belongsTo(User);
+User.hasMany(Address, { as: "addresses" });
+
+Cart.belongsTo(User);
+User.hasOne(Cart);
+
+Cart.hasMany(CartItem, { onDelete: "CASCADE", hooks: true });
+CartItem.belongsTo(Cart);
+
+Order.belongsTo(User);
+User.hasMany(Order);
+
+Order.hasMany(OrderItem);
+OrderItem.belongsTo(Order);
+
+OrderItem.belongsTo(Product);
+Product.hasMany(OrderItem);
+
+OrderItem.belongsTo(Menu);
+Menu.hasMany(OrderItem);
+
+Product.hasMany(CartItem);
+CartItem.belongsTo(Product);
+
+CartItem.belongsTo(Menu);
+Menu.hasMany(CartItem);
+
+Category.hasMany(Product);
+Product.belongsTo(Category);
+
+Menu.belongsToMany(Product, { through: "MenuFood" });
+Product.belongsToMany(Menu, { through: "MenuFood" });
+
+Category.hasMany(Menu);
+Menu.belongsTo(Category);
+
+Address.hasMany(Order);
+Order.belongsTo(Address);
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(PORT);
+app.set("port", port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+async function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
+
+  await sequelize.sync();
+  let password = bcrypt.hashSync("123456789", bcrypt.genSaltSync(8), null);
+  const adminUser = {
+    firstName: "admin",
+    lastName: "admin",
+    email: "admin@gmail.com",
+    password: password,
+    birthDate: "1990-01-01",
+    isAdmin: true,
+  };
+  const existAdmin = await User.findOne({
+    where: { email: "admin@gmail.com" },
+  });
+  if (!existAdmin) {
+    await User.create(adminUser);
+  }
+
+  const categories = [
+    {
+      name: "Yemek",
+      description: "Lezzetli yemekler",
+      createdBy: adminUser.id,
+    },
+    {
+      name: "İçecek",
+      description: "Serinletici içecekler",
+      createdBy: adminUser.id,
+    },
+    { name: "Tatlı", description: "Tatlı lezzetler", createdBy: adminUser.id },
+  ];
+
+  for (const categoryData of categories) {
+    const existingCategory = await Category.findOne({
+      where: { name: categoryData.name },
+    });
+
+    if (!existingCategory) {
+      await Category.create(categoryData);
+    }
+  }
+  const products = [
+    {
+      name: "Tavuk Şiş",
+      price: 25.0,
+      description: "Lezzetli tavuk şiş, yanında taze sebzelerle servis edilir.",
+      categoryId: 1,
+      createdBy: 1,
+    },
+    {
+      name: "Spagetti Bolonez",
+      price: 18.5,
+      description: "İtalyan mutfağından eşsiz bir spagetti tarifi.",
+      categoryId: 1,
+      createdBy: 1,
+    },
+    {
+      name: "Hamburger",
+      price: 15.0,
+      description: "Klasik hamburger tarifi, özel soslarla sunulur.",
+      categoryId: 1,
+      createdBy: 1,
+    },
+    {
+      name: "Meyve Suyu",
+      price: 6.0,
+      description: "Doğal meyvelerden elde edilen taze meyve suyu.",
+      categoryId: 2,
+      createdBy: 1,
+    },
+    {
+      name: "Limonata",
+      price: 5.0,
+      description: "Serinletici limon aromalı içecek.",
+      categoryId: 2,
+      createdBy: 1,
+    },
+    {
+      name: "Kola",
+      price: 4.5,
+      description: "Klasik kola içeceği, buzla servis edilir.",
+      categoryId: 2,
+      createdBy: 1,
+    },
+    {
+      name: "Browni",
+      price: 10.0,
+      description: "Yumuşak ve lezzetli browni tatlısı.",
+      categoryId: 3,
+      createdBy: 1,
+    },
+    {
+      name: "Baklava",
+      price: 12.0,
+      description: "Geleneksel Türk tatlısı baklava, cevizli ve şerbetli.",
+      categoryId: 3,
+      createdBy: 1,
+    },
+    {
+      name: "Cheesecake",
+      price: 14.0,
+      description: "Kremalı ve lezzetli cheesecake tatlısı.",
+      categoryId: 3,
+      createdBy: 1,
+    },
+  ];
+  
+
+  for (const product of products) {
+    const existingProduct = await Product.findOne({
+      where: { name: product.name },
+    });
+
+    if (!existingProduct) {
+      await Product.create(product);
+    }
+  }
+}
