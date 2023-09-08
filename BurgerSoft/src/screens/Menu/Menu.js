@@ -23,7 +23,7 @@ export default function Foods({navigation}) {
   
 
   const goToBasket = () => {
-    navigation.navigate('Basket'); // Navigate to the Basket
+    navigation.navigate('Basket'); 
   };
 
   const renderCategoryItem = ({ item }) => (

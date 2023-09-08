@@ -14,7 +14,6 @@ export default StyleSheet.create({
     body_container:{
         flex:1,
         marginTop:1,
-        //backgroundColor:"green",
         padding:20,
     },
     logo:{

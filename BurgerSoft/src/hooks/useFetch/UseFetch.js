@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import { useSelector } from 'react-redux'; // Redux store'dan state almak için
+import { useSelector } from 'react-redux'; 
 
 function useFetch(url) {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
-    const token = useSelector(state => state.user.token); // Redux store'dan token alınması
+    const token = useSelector(state => state.user.token); 
 
     useEffect(() => {
         fetchData();

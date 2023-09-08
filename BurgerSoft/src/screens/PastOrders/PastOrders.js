@@ -36,7 +36,6 @@ const PastOrders = () => {
     post(`${Config.REORDER_POST}/${item.orderInfo.id}`, { addressId: item.orderInfo.address.id });
     console.log("Reorder", item.orderInfo.id);
     setSelectedItem(item);
-    // Sipariş tekrar verildiğinde metni görüntülemek için setSelectedItem'dan hemen sonra bu metni ekleyin
     setSelectedItemText("SİPARİŞ TEKRARDAN VERİLDİ");
   };
 
@@ -59,7 +58,6 @@ const PastOrders = () => {
         <TouchableOpacity onPress={handleClosePanel}>
           <Text style={styles.panelText}>Kapat</Text>
         </TouchableOpacity>
-        {/* Metni burada görüntüle */}
         {selectedItemText && <Text style={{ fontSize: 25, fontWeight: 'bold' }}>{selectedItemText}</Text>}
       </View>
     )}

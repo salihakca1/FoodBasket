@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#E8E7DC', // Cream background color
+      backgroundColor: '#E8E7DC', 
       padding: 20,
     },
     title: {
@@ -38,7 +38,7 @@ export default StyleSheet.create({
       color: '#333',
     },
     completeOrderButton: {
-      backgroundColor: 'red', // Red button color
+      backgroundColor: 'red', 
       padding: 15,
       borderRadius: 10,
       justifyContent: 'center',

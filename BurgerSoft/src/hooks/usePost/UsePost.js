@@ -1,13 +1,13 @@
 import { useState } from "react";
 import axios from 'axios';
-import { useSelector } from 'react-redux'; // Redux store'dan state almak için
+import { useSelector } from 'react-redux'; 
 
 function usePost() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const token = useSelector(state => state.user.token); // Redux store'dan token alınması
+    const token = useSelector(state => state.user.token);
 
     const post = async (url, apiData) => {
         try {

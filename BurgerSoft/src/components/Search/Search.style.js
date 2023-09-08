@@ -13,11 +13,11 @@ export default StyleSheet.create({
     width: 340,
   },    
   inputContainer: {
-    flexDirection: 'row', // Bu satırı ekledik, icon ve TextInput'i yan yana yerleştirmek için
-    alignItems: 'center', // Bu satırı ekledik, öğeleri dikey olarak hizalamak için
+    flexDirection: 'row', 
+    alignItems: 'center', 
   },
   textinput: {
     borderRadius: 10,
-    marginLeft: 5, // İstediğiniz boşluğu ayarlamak için
+    marginLeft: 5, 
   },
 });

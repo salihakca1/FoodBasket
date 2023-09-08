@@ -69,7 +69,7 @@ const App = ({navigation}) => {
             birthDate: '',
             password: '',
             againPassword: '',
-            acceptTerms: false, // New field
+            acceptTerms: false, 
           }}
           onSubmit={handleLogin}
           validationSchema={validationSchema}>

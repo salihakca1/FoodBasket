@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { useDispatch } from 'react-redux';
-import { logoutUser } from '../../redux/userSlicer'; // Make sure the path is correct
+import { logoutUser } from '../../redux/userSlicer';
 
 import { useSelector } from 'react-redux';
 

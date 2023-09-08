@@ -27,7 +27,6 @@ const Address = ({navigation}) => {
 
     const handleProductSelect = id => {
         console.log("Address selected",id)
-        //navigation.navigate('DetailPage', {id});
 
     };
 
